@@ -137,3 +137,45 @@ mutagen version
 #### Why Mutagen instead of shared folders?
 
 UTM's VirtFS/9P shared folders cause significant performance degradation for filesystem-intensive Git operations, particularly `git status`. Keeping project files on the VM's native filesystem and synchronizing them with Mutagen eliminated this bottleneck.
+
+## Ubuntu Virtual Machine Setup
+
+### 1. Download Ubuntu Server
+
+Download the ARM64 version of [Ubuntu Server](https://ubuntu.com/download/server/arm).
+
+This setup was tested with **Ubuntu Server 26.04 ARM64**.
+
+### 2. Create the Virtual Machine
+
+Open UTM and create a new virtual machine using the following settings:
+
+| Setting | Value |
+|---|---|
+| Virtualization mode | Emulate |
+| Operating system | Linux |
+| Architecture | ARM64 (aarch64) |
+| Memory | 4 GB |
+| CPU cores | 4 |
+| Storage | 40 GB |
+| Boot image | Ubuntu Server ARM64 ISO |
+| VM name | `UbuntuVM` |
+
+Use QEMU rather than Apple's virtualization framework.
+
+The VM does not require a graphical desktop environment. Ubuntu Server is sufficient for running AI coding agents and development tools.
+
+### 3. Install Ubuntu Server
+
+Start the VM and complete the Ubuntu Server installation.
+
+Recommended installation choices:
+
+- Minimal Ubuntu Server installation.
+- Enable the OpenSSH server.
+- Do not import SSH keys from GitHub during installation.
+- Do not install optional server snaps unless needed.
+- Use a dedicated, non-root Linux user.
+- Use a dedicated password for the VM user account. Do not reuse your macOS host password, including the one used for `sudo`.
+
+After installation, remove the installation ISO from the virtual drive and reboot.
