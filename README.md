@@ -84,7 +84,7 @@ Core principles:
 2. **macOS Host Setup**
    - 2.1. [Install UTM](docs/install_utm.md)
    - 2.2. [Install Mutagen](docs/install_mutagen.md)
-   - 2.3. [Configure LuLu Firewall](docs/configure_lulu.md)
+   - 2.3. [Install and Configure LuLu Firewall](docs/configure_lulu.md)
 3. **Ubuntu Virtual Machine Setup**
    - 3.1. [Download Ubuntu Server](docs/download_ubuntu.md)
    - 3.2. [Create the Virtual Machine](docs/create_vm.md)
