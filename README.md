@@ -6,12 +6,16 @@ A reproducible setup guide for an isolated AI-assisted development environment.
 
 Run AI coding agents in an isolated environment while keeping source code review, Git operations, and access to sensitive resources under human control.
 
+> [!IMPORTANT]
+> **This setup does not aim for absolute isolation.** Instead, it seeks a practical balance between security and usability for solo developers and small teams. The VM shares the host's physical hardware, and file synchronization intentionally allows changes made inside the VM to propagate to the host.
+
 ## Architecture
 
-The environment consists of two systems:
+The environment consists of two systems, with an optional network security layer:
 
-- **Host:** Code editing and reviewing changes, managing Git repositories, and accessing GitHub.
-- **Virtual machine:** Runs AI coding agents, development tools, project dependencies, and tests.
+- **Host:** Code editing, reviewing changes, managing Git repositories, and accessing GitHub.
+- **Virtual Machine:** Runs AI coding agents, development tools, project dependencies, and tests.
+- **Network Security (optional):** Restricts the VM's network access and routes outbound traffic through a VPN connection.
 
 ```mermaid
 flowchart LR
@@ -58,7 +62,6 @@ flowchart LR
     VPN --> INTERNET
 ```
 
-UTM provides virtualization, while Mutagen synchronizes the shraded `~/VMShare` folder between the host and the VM over SSH.
 
 ## Security Model
 
@@ -66,16 +69,13 @@ The virtual machine is treated as an untrusted execution environment.
 
 Core principles:
 
-- AI agents do not receive the host's SSH keys or GitHub credentials.
-- The VM's network access is restricted using host firewall rules.
-- Production credentials and sensitive data must not be copied into the VM.
-- Only projects explicitly placed in `~/VMShare` are synchronized into the VM.
-- Project changes made by agents are synchronized to the host for review.
-- Agent-generated changes require human review before being committed.
-- Git commits, pushes, and pull requests are managed by the developer on the host.
-
-> [!IMPORTANT]
-> **Isolation is not absolute.** The VM shares the host's physical hardware, and Mutagen intentionally allows changes made inside the VM to propagate into `~/VMShare`.
+- AI agents **MUST NOT** have access to the host's SSH keys or GitHub credentials.
+- Production credentials and sensitive data **MUST NOT** be copied into the VM.
+- Only explicitly authorized projects **MAY** be synchronized into the VM.
+- Changes made by AI agents **MUST** be reviewed by the developer before being committed.
+- Git commits, pushes, and pull requests **MUST** be performed on the host.
+- Using optional network security layer, the VM's network access **MUST** be restricted using host firewall rules.
+- Changes made inside the VM **MAY** propagate to the host through file synchronization.
 
 ## Step-by-Step Setup Instructions
 
