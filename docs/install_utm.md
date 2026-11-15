@@ -8,5 +8,11 @@ Install it using Homebrew:
 brew install --cask utm
 ```
 
+Verify the installation and CLI availability:
+
+```bash
+utmctl version
+```
+
 > [!NOTE]
 > While UTM also supports Apple's native virtualization framework, this setup uses **QEMU emulation**. QEMU was selected because its Emulated VLAN networking mode provided working internet connectivity alongside the host's VPN, while allowing additional network restrictions through the host firewall.
