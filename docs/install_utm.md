@@ -1,16 +1,12 @@
 # Install UTM
 
-[UTM](https://mac.getutm.app/) provides the virtual machine environment used to run Ubuntu Server.
+The isolated virtual machine environment is provided by [UTM](https://getutm.app/).
 
-Install UTM using Homebrew:
+Install it using Homebrew:
 
 ```bash
 brew install --cask utm
 ```
 
-This setup uses **QEMU emulation** rather than Apple's native virtualization framework.
-
-QEMU was selected to support the required virtual networking configuration, including SSH port forwarding and host-level network restrictions.
-
 > [!NOTE]
-> QEMU emulation introduces some performance overhead compared to native virtualization. For this workflow, the trade-off is acceptable because AI inference runs outside the VM, while the VM handles development tools, code execution, and tests.
+> While UTM also supports Apple's native virtualization framework, this setup uses **QEMU emulation**. QEMU was selected because its Emulated VLAN networking mode provided working internet connectivity alongside the host's VPN, while allowing additional network restrictions through the host firewall.
