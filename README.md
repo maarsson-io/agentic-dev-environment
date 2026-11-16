@@ -95,3 +95,5 @@ Core principles:
    - 4.1. [Configure SSH Port Forwarding](docs/configure_ssh_forwarding.md)
    - 4.2. [Configure SSH Authentication](docs/configure_ssh.md)
    - 4.3. [Verify Network Isolation](docs/verify_network_isolation.md)
+5. **Development Environment**
+   - 5.1. [Install Development Tools](docs/install_dev_tools.md)
