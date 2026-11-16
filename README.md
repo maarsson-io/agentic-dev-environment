@@ -98,3 +98,4 @@ Core principles:
 5. **Development Environment**
    - 5.1. [Install Development Tools](docs/install_dev_tools.md)
    - 5.2. [Configure File Synchronization](docs/configure_mutagen.md)
+   - 5.3. [Install AI Coding Agent](docs/install_agent.md)
