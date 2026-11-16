@@ -81,8 +81,8 @@ Core principles:
 
 ## Step-by-Step Setup Instructions
 
-1. **Requirements**
-   - 1.1. [System Requirements](docs/requirements.md)
+1. **Getting Started**
+   - 1.2. [System Requirements](docs/requirements.md)
 2. **macOS Host Setup**
    - 2.1. [Install UTM](docs/install_utm.md)
    - 2.2. [Install Mutagen](docs/install_mutagen.md)
