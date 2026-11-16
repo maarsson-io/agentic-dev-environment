@@ -185,9 +185,61 @@ MySQL should listen only on `127.0.0.1:3306` or another explicitly authorized lo
 > [!IMPORTANT]
 > Do not expose MySQL to external networks. Development databases should remain accessible only inside the VM unless access is explicitly required and secured.
 
-### Create a Development User
+### Create Per-Project Database and User
 
-Create a dedicated MySQL user for local development instead of using the administrative `root` account.
+Each project should have its own MySQL database and user, with permissions restricted to that database. Perform this step whenever a new project is added to the development environment. It is not required during the initial VM setup.
+
+Open the MySQL shell:
+
+```bash
+sudo mysql
+```
+
+Create a database and a dedicated user (replace `project_name` and the password with project-specific values):
+
+```sql
+CREATE DATABASE project_name
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'project_name'@'localhost'
+  IDENTIFIED BY 'UNIQUE_STRONG_PASSWORD';
+
+GRANT ALL PRIVILEGES ON project_name.*
+  TO 'project_name'@'localhost';
+```
+
+Verify the permissions:
+
+```sql
+SHOW GRANTS FOR 'project_name'@'localhost';
+```
+
+Exit MySQL:
+
+```sql
+EXIT;
+```
+
+Configure the project's `.env` file:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=project_name
+DB_USERNAME=project_name
+DB_PASSWORD=UNIQUE_STRONG_PASSWORD
+```
+
+> [!NOTE]
+> These permissions allow Laravel migrations and normal application database operations, but do not grant access to other project databases. Use unique credentials for each project.
+
+> Database-level permissions are a useful restriction, but they do not isolate projects from an agent that can access other projects' files or execute privileged system commands.
+
+### Optional: Create a Global Development User
+
+Optionally create a MySQL user for database administration through SSH-tunneled connections from the macOS host, without using the `root` account.
 
 Open the MySQL shell:
 
@@ -214,8 +266,14 @@ Verify password-based authentication:
 mysql -u dev -p -h 127.0.0.1
 ```
 
-> [!IMPORTANT]
-> The `dev` user has broad database privileges for convenience in this isolated development VM. Do not reuse this configuration in production, and do not grant this user access from external hosts. The account does not have `GRANT OPTION`.
+> [!CAUTION]
+> Creating a global `dev` user is an **optional convenience**, primarily intended for database administration from host applications such as Sequel Ace or TablePro over SSH.
+>
+> This user has broad privileges across all databases. If its credentials are compromised or exposed to an AI agent, every development database may be affected.
+>
+> **For application connections, use a separate MySQL user for each project**, granting privileges only on that project's database. Do not use the global `dev` credentials in project `.env` files.
+>
+> Project-specific database permissions reduce accidental cross-project access but do not provide complete isolation, particularly when the agent can execute commands with elevated privileges.
 
 ## Install Redis
 

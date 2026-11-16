@@ -82,6 +82,7 @@ Core principles:
 ## Step-by-Step Setup Instructions
 
 1. **Getting Started**
+   - 1.1. [Intended Workflow](docs/intended_workflow.md)
    - 1.2. [System Requirements](docs/requirements.md)
 2. **macOS Host Setup**
    - 2.1. [Install UTM](docs/install_utm.md)
