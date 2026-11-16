@@ -6,6 +6,8 @@ A reproducible setup guide for an isolated AI-assisted development environment.
 
 Run AI coding agents in an isolated environment while keeping source code review, Git operations, and access to sensitive resources under human control.
 
+This setup is primarily designed for **Laravel/PHP development with MySQL and Node.js**, reflecting the technology stack used in my own projects. The underlying architecture can be adapted to other development environments.
+
 > [!IMPORTANT]
 > **This setup does not aim for absolute isolation.** Instead, it seeks a practical balance between security and usability for solo developers and small teams. The VM shares the host's physical hardware, and file synchronization intentionally allows changes made inside the VM to propagate to the host.
 
