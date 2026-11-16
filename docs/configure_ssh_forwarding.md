@@ -1,66 +1,60 @@
-### 1. Configure VM Networking
+# Configure SSH Port Forwarding
 
-Shut down the Ubuntu VM before changing its network settings.
+SSH port forwarding allows the macOS host to connect to the Ubuntu VM through a local TCP port without exposing the VM's SSH service on the host's external network interfaces.
 
-In UTM, open the VM settings and configure:
+## Configure UTM
+
+Shut down the VM and open its network settings in UTM.
+
+Under **Network** (Emulated VLAN) → **Port Forwarding**, add the following port forwarding rule:
 
 | Setting | Value |
 |---|---|
-| Network mode | Emulated VLAN |
-| Network adapter | Emulated network adapter |
-| Port forwarding | TCP, host `127.0.0.1:2222` → guest port `22` |
+| Protocol | TCP |
+| Guest Address | Leave empty |
+| Guest Port | `22` |
+| Host Address | `127.0.0.1` |
+| Host Port | `2222` |
 
-The forwarded SSH port allows the macOS host to connect to the VM without exposing the SSH service on the host's external network interfaces.
+> [!IMPORTANT]
+> The host address **MUST** be `127.0.0.1`, not `0.0.0.0`. This restricts the forwarded SSH port to the macOS host's loopback interface.
 
-Start the VM and verify that its SSH server is running:
+## Verify SSH Access
 
-```bash
-sudo systemctl status ssh
-```
-
-### 2. Create a Dedicated SSH Key
-
-On the macOS host, generate a dedicated SSH key for the VM:
+Start the VM, log in and verify that the SSH server is running:
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_ubuntu_vm -C "ubuntu-vm"
+sudo systemctl is-active ssh
 ```
 
-Do not reuse your existing GitHub SSH key.
+Expected output:
 
-Copy the public key into the VM user's `~/.ssh/authorized_keys` file. From the macOS host:
+```text
+active
+```
+
+On the macOS host, test the forwarded connection:
 
 ```bash
-ssh-copy-id -i ~/.ssh/id_ed25519_ubuntu_vm.pub -p 2222 <vm-user>@127.0.0.1
-```
-
-If `ssh-copy-id` is unavailable, add the contents of the `.pub` file to `~/.ssh/authorized_keys` manually.
-
-### 3. Configure an SSH Alias
-
-Add the following entry to the macOS host's `~/.ssh/config`:
-
-```sshconfig
-Host uvm
-    HostName 127.0.0.1
-    Port 2222
-    User <vm-user>
-    IdentityFile ~/.ssh/id_ed25519_ubuntu_vm
-    IdentitiesOnly yes
-    ForwardAgent no
+ssh -p 2222 <vm-user>@127.0.0.1
 ```
 
 Replace `<vm-user>` with the Ubuntu username created during installation.
 
-Test the connection:
+Accept the VM's SSH host key after verifying its fingerprint. Enter the VM user's password when prompted.
 
-```bash
-ssh uvm
-```
+## Configure Serial Console
 
-Verify that the connection succeeds using the dedicated SSH key.
+Once SSH access has been verified, the graphical display can be replaced with a serial console.
 
-> [!IMPORTANT]
-> Keep the private SSH key on the macOS host. Do not copy host SSH credentials, GitHub credentials, or other sensitive authentication material into the VM.
->
-> SSH agent forwarding is explicitly disabled to prevent the VM from using the host's SSH agent.
+1. Shut down the VM.
+2. Open the VM settings in UTM.
+3. Remove the **Display** device.
+4. Add a new  **Serial** device and select **Pseudo-TTY Device**.
+5. Start the VM from the macOS host terminal:
+
+   ```bash
+   utmctl start UbuntuVM
+   ```
+
+6. Verify that both the serial console and SSH access work.

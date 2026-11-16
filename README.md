@@ -90,4 +90,4 @@ Core principles:
    - 3.2. [Create the Virtual Machine](docs/create_vm.md)
    - 3.3. [Install Ubuntu Server](docs/install_ubuntu.md)
 4. **VM Networking and SSH Access**
-   - 4.1. [Configure SSH Access](docs/configure_ssh_forwarding.md)
+   - 4.1. [Configure SSH Port Forwarding](docs/configure_ssh_forwarding.md)
