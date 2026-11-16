@@ -91,3 +91,4 @@ Core principles:
    - 3.3. [Install Ubuntu Server](docs/install_ubuntu.md)
 4. **VM Networking and SSH Access**
    - 4.1. [Configure SSH Port Forwarding](docs/configure_ssh_forwarding.md)
+   - 4.2. [Configure SSH Authentication](docs/configure_ssh.md)
