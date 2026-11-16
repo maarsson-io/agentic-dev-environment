@@ -92,3 +92,4 @@ Core principles:
 4. **VM Networking and SSH Access**
    - 4.1. [Configure SSH Port Forwarding](docs/configure_ssh_forwarding.md)
    - 4.2. [Configure SSH Authentication](docs/configure_ssh.md)
+   - 4.3. [Verify Network Isolation](docs/verify_network_isolation.md)
