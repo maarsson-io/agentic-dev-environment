@@ -15,4 +15,4 @@ utmctl version
 ```
 
 > [!NOTE]
-> While UTM also supports Apple's native virtualization framework, this setup uses **QEMU emulation**. QEMU was selected because its Emulated VLAN networking mode provided working internet connectivity alongside the host's VPN, while allowing additional network restrictions through the host firewall.
+> While UTM also supports Apple's native virtualization framework, this setup uses **QEMU-based virtualization with hardware acceleration**. QEMU was selected because its Emulated VLAN networking mode provided working internet connectivity alongside the host's VPN, while allowing additional network restrictions through the host firewall.

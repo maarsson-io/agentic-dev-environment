@@ -20,6 +20,7 @@ Open UTM and create a new virtual machine using the following settings:
 
 **Before starting the Ubuntu installer**, open the VM settings in UTM and configure its network:
 
-| Setting | Value |
-|---|---|
-| Network Mode | Emulated VLAN |
+| Menuitem | Setting | Value |
+|---|---|---|
+| QEMU | Use Hypervisor | Enabled |
+| Network | Network Mode | Emulated VLAN |
