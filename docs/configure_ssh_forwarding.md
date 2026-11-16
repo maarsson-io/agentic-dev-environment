@@ -32,6 +32,42 @@ Expected output:
 ```text
 active
 ```
+### Enable SSH service
+
+If the SSH service reports `inactive`, start it and enable automatic startup:
+
+```bash
+sudo systemctl enable --now ssh
+```
+
+Verify that the service is running:
+
+```bash
+sudo systemctl is-active ssh
+```
+
+Expected output:
+
+```text
+active
+```
+
+If the SSH service is not installed, install OpenSSH Server first:
+
+```bash
+sudo apt update
+sudo apt install -y openssh-server
+sudo systemctl enable --now ssh
+```
+
+If the service still fails to start, inspect its status:
+
+```bash
+sudo systemctl status ssh
+sudo journalctl -u ssh -b --no-pager
+```
+
+##  Test connection
 
 On the macOS host, test the forwarded connection:
 
