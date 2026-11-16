@@ -73,12 +73,12 @@ Since IPv6 is not required for this development environment, disable automatic I
 
 The Ubuntu Server installer may enable DHCPv6 by default. Update the Netplan configuration to disable DHCPv6, IPv6 Router Advertisements, and link-local addressing:
 
-```bash
-sudo sed -i \
-  -e 's/dhcp6: true/dhcp6: false/' \
-  -e '/dhcp6: false/a\      accept-ra: false\n      link-local: []' \
-  /etc/netplan/00-installer-config.yaml
-```
+Choose the command corresponding to your Ubuntu version:
+
+| Ubuntu version | Command |
+|---|---|
+| **24.04 LTS** | `sudo sed -i '/dhcp4: true/a\      dhcp6: false\n      accept-ra: false\n      link-local: []'  /etc/netplan/50-cloud-init.yaml` |
+| **26.04 LTS** | `sudo sed -i -e 's/dhcp6: true/dhcp6: false/' -e '/dhcp6: false/a\      accept-ra: false\n      link-local: []' /etc/netplan/00-installer-config.yaml` |
 
 Validate and apply the configuration:
 
